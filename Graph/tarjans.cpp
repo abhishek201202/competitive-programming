@@ -7,41 +7,34 @@
 using namespace std;
 
 const int N = 1e5;
+int n, m, timer, tin[N], low[N], vis[N];
 vector<int> adj[N];
-vector<int> in , min_time , vis;
 vector<pair<int,int>> bridge;
-int n , m ;
-int timer;
-
-void dfs(int u , int p = -1){
-	in[u] = timer++;
-	vis[u] = 1;
-	for(auto v : adj[u]){
-		if(v == p) continue;
-		
-		min_time[u] = min(min_time[u] , min_time[v]);
-		if(vis[v]) continue;
-		
-		dfs(v , u);
-		min_time[u] = min(min_time[u] , min_time[v]);
-	}
-	for(auto v : adj[u]){
-		if(v == p) continue;
-		min_time[u] = min(min_time[u] , in[v]);
-	}
-
-	if(p != -1 && min_time[u] > in[p]){
-		bridge.pb({p , u});
-	}
-}
 
 void tarjans(){
 	timer = 0;
-	in.resize(n , 0);
-	vis.resize(n , 0);
-	min_time.resize(n , 1e8);
+	memset(tin, 0, sizeof timer);
+	memset(low, 0, sizeof low);
+	memset(vis, 0, sizeof vis);
+	bridge.clear();
+	function<void(int, int)> dfs = [&](int u, int p){
+		vis[u] = 1;
+		tin[u] = low[u] = timer++;
+		for(auto v : adj[u]){
+			if(v == p) continue;
+			if(vis[v]){
+				low[u] = min(low[u], tin[v]);
+			}else{
+				dfs(v, u);
+				low[u] = min(low[u], low[v]);
+				if(low[v] > tin[u]){
+					bridge.push_back({u, v});
+				}
+			}
+		}
+	};
 	for(int i = 0 ;i < n ; i++){
-		if(!vis[i]) dfs(i);
+		if(!vis[i]) dfs(i, -1);
 	}
 }
 
