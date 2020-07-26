@@ -1,3 +1,4 @@
+// Hierholzer’s Algorithm
 #include<bits/stdc++.h>
 #define int long long
 #define pb push_back
@@ -10,20 +11,23 @@ vector<int> adj[N];
 int out[N];
 int n , m; 
 
-// condition of Eulerian Path :
-// directed === >>> at most 1 vertex has (out - in == 1)
-//                  at most 1 vertex has (in - out == 1)
-//                  all other vertices have equal in and out degree
-// undirected === >>> either every certex has even degree or exactly 
-//                    2 vertices have odd degree
+// All the Edges are in same connected component 
+// for both directed and undirected graph
+
+// For Directed Graph
+// Eulerian Path    :: at most 1 vertex has (out - in == 1)
+//                     at most 1 vertex has (in - out == 1)
+//                     all other vertices have equal in and out degree
+// ((sv = out - in == 1) && (ev == in - out == 1)) when exactly 2 vertex are odd
+// Eulerian Circuit :: every vertex has equal in and out degree
+
+// For Undirected Graph
+// Eulerian Path    :: either every vertex has even degree 
+//                     or exactly 2 vertices have odd degree 
+// Eulerian Circuit :: every vertex has an even degree
 
 
-
-// Condtion for Eulerian Circuit:
-// directed -> every vertex has equal in and out degree
-// undirected -> every vertex has an even degree
-
-// this is for directed graph
+// For directed graph
 vector<int> eulerian(){
 	vector<int> path;
 	stack<int> st;
@@ -60,26 +64,3 @@ int32_t main(){
 	}
 	cout << endl;
 }
-/*
-6 12
-1 2 
-1 3
-2 2 
-2 4
-2 4
-3 2
-3 1
-3 5
-4 3
-4 6 
-5 6
-6 3
-output : 1 3 5 6 3 1 2 4 3 2 2 4 6
-*/
-/*
-4 4
-1 2 
-1 2
-1 3
-2 3
-*/
