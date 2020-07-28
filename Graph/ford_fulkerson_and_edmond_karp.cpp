@@ -1,3 +1,4 @@
+// Ford Fulkersan
 #include<bits/stdc++.h>
 #define int long long
 #define pb push_back
@@ -10,33 +11,29 @@ vector<vector<int>> adj , capacity;
 vector<int> parent(N , 0);
 int n , m;
 
-int bfs(int S , int T){
-	fill(parent.begin() , parent.end() , -1);
-	parent[S] = -2;
+int MaxFlow(int S , int T){
+	function<int(int, int)> bfs = [&](int S, int T){
+		fill(parent.begin() , parent.end() , -1);
+		parent[S] = -2;
 
-	queue<pair<int,int>> q;
-	q.push({S , 1e18});
+		queue<pair<int,int>> q;
+		q.push({S , 1e18});
 
-	while(q.size() != 0){
-		pair<int,int> curr = q.front();
-		int u = curr.ff;
-		int f = curr.ss;
-		for(int i = 0 ;i < adj[u].size() ; i++){
-			int v = adj[u][i];
-			if(parent[v] == -1 && capacity[u][v]){
-				parent[v] = u;
-				int new_f = min(f , capacity[u][v]);
-				if(v == T) return new_f;
-				q.push({v , new_f});
+		while(q.size() != 0){
+			int u = q.front().ff;
+			int f = q.front().ss;
+			q.pop();
+			for(auto v : adj[u]){
+				if(parent[v] == -1 && capacity[u][v]){
+					parent[v] = u;
+					int new_f = min(f , capacity[u][v]);
+					if(v == T) return new_f;
+					q.push({v , new_f});
+				}
 			}
 		}
-	}
-	return 0;
-}
-
-
-
-int ford_fulkerson(int S , int T){
+		return 0ll;
+	};
 	int flow = 0;
 	while(1){
 		int curr_flow = bfs(S , T);
@@ -70,5 +67,5 @@ int32_t main(){
 	}
 	int S , T;
 	cin >> S >> T;
-
+	cout << MaxFlow(S, T) << endl;
 }
