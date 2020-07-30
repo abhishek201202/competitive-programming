@@ -13,8 +13,8 @@ int n , m;
 
 
 // 0 ==>> unvisited
-// 1 ==>> visited and removed from the stack yet
-// 2 ==>> visited and removed from the stack
+// 1 ==>> visited and still present in the stack
+// 2 ==>> visited and popped out from the stack
 
 // for undirected graph it wll give same cycle more than once 
 // for directed graph
