@@ -16,13 +16,13 @@ bool is_bipartite(){
 			queue<int> q;
 			q.push(i);
 			col[i] = 1;
-			while(q.size() != 0){
+			while(q.size()){
 				int u = q.front();  q.pop();
 				for(auto v : adj[u]){
 					if(!col[v]){
 						col[v] = col[u] ^ 3  ,  q.push(v);
 					}else{
-						okk = ( col[v] == (col[u] ^ 3) );
+						okk &= ( col[v] == (col[u] ^ 3) );
 					}
 				}
 			}
