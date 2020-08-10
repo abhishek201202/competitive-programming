@@ -7,7 +7,7 @@ using namespace std;
 
 
 const int N  =  1e6 + 5;
-int n , c ;
+int n , c;
 int arr[N] , tree[4*N] , lazy[4*N];
 
 // horrible queries.....[coding ninjas]
