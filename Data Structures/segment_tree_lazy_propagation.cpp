@@ -6,76 +6,76 @@
 using namespace std;
 
 
-const int N  =  1e6 + 5;
-int n , c;
-int arr[N] , tree[4*N] , lazy[4*N];
-
 // horrible queries.....[coding ninjas]
-
-void pushdown(int si , int ei , int index){
-    if(lazy[index] != 0){
-        tree[index] += (ei - si + 1) * lazy[index];
-        if(si != ei){
-            lazy[2*index] += lazy[index];
-            lazy[2*index + 1] += lazy[index];
-        }
-        lazy[index] = 0;
+struct SegmentTree{
+    int n;
+    vector<int> a, tree, lazy;
+    SegmentTree(vector<int> &a){
+        this -> a = a;
+        n = a.size();
+        tree.resize(4 * n, 0);
+        lazy.resize(4 * n, 0);
     }
-}
 
-
-void update(int si , int ei , int index , int l , int r , int value){
-    if(r < l) return;
-    pushdown(si , ei , index); // previous updation
-    if(l > ei || r < si) return; // no overlapping
-    if(l <= si && r >= ei){ // complete overlapping
-        tree[index] += (ei - si + 1)*value;
-        if(si != ei){
-            lazy[2*index] +=  value;
-            lazy[2*index + 1] +=  value;
-        }
-        return;
-    }
-    // partial overlap
-    int mid = (si + ei)/2;
-    update(si , mid , 2*index  , l , r , value);
-    update(mid+ 1 , ei , 2*index + 1 , l , r , value);
-    tree[index] = tree[2*index] + tree[2*index + 1];
-}
-
-
-int query(int si , int ei , int index , int l , int r){
-    if(l > ei || r < si) return 0;
-    pushdown(si , ei , index);
-    if(l <= si && r >= ei) return tree[index];
-    int mid = (si + ei)/2;
-    int ans1 = query(si , mid , 2 * index  , l , r);
-    int ans2 = query(mid + 1 , ei , 2 * index + 1 , l , r);
-    return ans1 + ans2;
-}
-
-
-void solve(){
-    cin >> n >> c;
-    while(c--){
-        int d; cin >> d;
-        if(d == 0){
-            int si , ei , value; cin >> si >> ei >> value;
-            update(0 , n-1 , 1 , si-1 , ei-1 , value);
-        }else{
-            int si , ei ; cin >> si >> ei;
-            cout<<query(0 , n-1 , 1 , si-1 , ei-1)<<endl;
+    void pushdown(int node, int si , int ei){
+        if(lazy[node] != 0){
+            tree[node] += (ei - si + 1) * lazy[node];
+            if(si != ei){
+                lazy[2 * node] += lazy[node];
+                lazy[2 * node + 1] += lazy[node];
+            }
+            lazy[node] = 0;
         }
     }
-}
+
+    void update(int l, int r, int val, int node, int si , int ei){
+        pushdown(node, si , ei);     // previous updation
+        if(l > ei || r < si) return; // no overlapping
+        if(l <= si && r >= ei){      // complete overlapping
+            tree[node] += (ei - si + 1) * val;
+            if(si != ei){
+                lazy[2 * node] +=  val;
+                lazy[2 * node + 1] +=  val;
+            }
+            return;
+        }
+        // partial overlap
+        int mid = (si + ei)/2;
+        update(l, r, val, 2 * node, si , mid);
+        update(l, r, val, 2 * node + 1, mid + 1, ei);
+        tree[node] = tree[2 * node] + tree[2 * node + 1];
+    }
+    void update(int l, int r, int val){ update(l, r, val, 1, 0, n - 1);}
+
+
+    int qry(int l, int r, int node, int si, int ei){
+        if(l > ei || r < si) return 0;
+        pushdown(node, si, ei);
+        if(l <= si && r >= ei) return tree[node];
+        int mid = (si + ei) / 2;
+        int L = qry(l, r, 2 * node, si, mid);
+        int R = qry(l, r, 2 * node + 1, mid + 1, ei);
+        return L + R;
+    }
+    int qry(int l, int r){ return qry(l, r, 1, 0, n - 1);}
+};
 
 int32_t main(){
     int t = 1;
     cin >> t;
     for(int i  =  0 ;i  < t ; i++){
-        memset(arr , 0 , sizeof(arr));
-        memset(tree , 0 , sizeof(tree));
-        memset(lazy , 0 , sizeof(lazy));
-        solve();
+         int n, q; cin >> n >> q;
+        vector<int> a(n, 0);
+        SegmentTree seg(a);
+        while(q--){
+            int d; cin >> d;
+            if(d == 0){
+                int l, r, val; cin >> l >> r >> val;
+                seg.update(l - 1, r - 1, val);
+            }else{
+                int l, r; cin >> l >> r;
+                cout << seg.qry(l - 1, r - 1) << endl;
+            }
+        }
     }
 }
