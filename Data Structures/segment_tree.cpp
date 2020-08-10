@@ -4,64 +4,61 @@
 #define ss second
 #define pb push_back
 using namespace std;
-
-
-const int N = 1e5 + 5;
-int n , q;
-int arr[N] ,tree[4 * N];
-
-// max range query
-
-void build(int node = 1 , int si = 0 ,int ei = n - 1){
-	if(si == ei){
-		tree[node] = arr[si];
-		return;
+/* 
+Variables need to traverse on segment tree
+1. si, ei of tree
+2. node of segment tree
+*/
+struct SegmentTree{
+	static int n;
+	vector<int> a, T;
+	SegmentTree(vector<int> a){
+		this -> n = a.size();
+		this -> a = a;
+		this -> T.resize(4 * n, 0);
 	}
-	int mid = (si + ei)/2;
-	build(2 * node , si , mid);
-	build(2 * node + 1 , mid + 1 , ei);
-	tree[node] = max(tree[2*node] , tree[2*node + 1]);
-}
+	
+	void build(int node = 1, int si = 0, int ei = n - 1){
+		if(si == ei){
+			T[node] = a[si];
+			return;
+		}
+		int mid = (si + ei)/2;
+		build(2 * node, si, mid);
+		build(2 * node + 1, mid + 1, ei);
+		T[node] = max(T[2*node] , T[2*node + 1]);
+	} 
 
-int query(int l , int r , int node = 1 , int si = 0 , int ei = n - 1){
-	if(l > ei || r < si){
-		return -1; 
+	int qry(int l, int r, int node = 1, int si = 0, int ei = n - 1){
+		if(l > ei || r < si){
+			return -1; 
+		}
+		if(l <= si && r >= ei){
+			return T[node];
+		}
+		int mid = (si + ei)/2;
+		int L = qry(l, r, 2 * node, si, mid);
+		int R = qry(l, r, 2 * node + 1, mid + 1, ei);
+		return max(L, R);
 	}
-	if(l <= si && r >= ei){
-		return tree[node];
+	void update(int idx, int val, int node = 1, int si = 0, int ei = n - 1){
+		if(si == ei){
+			T[node] = val;
+			a[idx] = val;
+			return;
+		}
+		int mid = (si + ei)/2;
+		if(idx <= mid){
+			update(idx, val, 2 * node, si, mid);
+		}else{
+			update(idx, val, 2 * node + 1, mid + 1, ei);
+		}
+		T[node] = max(T[2 * node], T[2 * node + 1]);
 	}
-	int mid = (si + ei)/2;
-	int left = query( l , r , 2 * node , si , mid);
-	int right = query( l , r , 2 * node + 1 , mid + 1 , ei);
-	return max(left , right);
-}
-
-void update(int index , int val , int node = 1 , int si = 0, int ei = n - 1){
-	if(si == ei){
-		tree[node] = val;
-		arr[index] = val;
-		return;
-	}
-	int mid = (si + ei)/2;
-	if(index <= mid){
-		update(index , val , 2 * node , si , mid);
-	}else{
-		update(index , val , 2 * node + 1 , mid + 1 , ei);
-	}
-	tree[node] = max(tree[2 * node] , tree[2 * node + 1]);
-}
-
+};
 
 
 int32_t main(){
-	cin >> n >> q;
-	for(int i = 0 ; i  <  n ;i++){
-		cin >> arr[i];
-	}
-	build();
-	for(int i = 0 ;i  < 4 * n ; i++){
-		cout << tree[i] << " ";
-	}
-	cout << endl;
-	cout << query(0 , 0) << endl;
+	
+
 }
