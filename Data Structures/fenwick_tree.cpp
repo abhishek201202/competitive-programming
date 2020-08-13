@@ -9,7 +9,7 @@ const int N = 1e5 + 5;
 int n;
 int arr[N] , bit[N];
 
-// range sum query.....[1 based indexing]
+// range sum query.....[1 based indexing on fenwick tree]
 
 int query(int index){
 	int sum = 0;
