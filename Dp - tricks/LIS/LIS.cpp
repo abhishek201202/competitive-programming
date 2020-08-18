@@ -28,7 +28,19 @@ int LIS(T& a){
 	return tail.size();
 }
 
-// Using Multisets and Sets
+// Using Multisets
+
+int LIS(vector<int> &a){
+	multiset<int> ms;
+	for(int i = 0; i < a.size(); i++){
+		ms.insert(a[i]);
+		auto it = ms.upper_bound(a[i]);
+		if(it != ms.end()) ms.erase(it);
+	}
+	return ms.size();
+}
+
+
 
 int32_t main(){
     while(1){
