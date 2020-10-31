@@ -4,14 +4,12 @@
 using namespace __gnu_pbds;
 using namespace std;
 
-template<class T1, class T2>
-std::ostream &operator<<(std::ostream &os, const std::pair<T1,T2> &p){ os << '{' << p.first << ", " << p.second << '}'; return os;}
-template<typename C,typename T = std::decay_t<decltype(*begin(std::declval<C>()))>,typename std::enable_if<!std::is_same<C,std::string>::value>::type* = nullptr>
-std::ostream &operator<<(std::ostream &os, const C &container){bool first = true; std::stringstream ss; ss << '[';for(const auto &x : container){ if(!first) ss << ", "; first = false; ss << x;} ss << ']';return os << ss.str();}
-vector<string> split(const string& s, char c) { vector<string> v; stringstream ss(s); string x; while (getline(ss, x, c)) v.emplace_back(x); return v;}
-inline void dbg_out(vector<string>::iterator it) { cerr << endl; }
-template<typename T, typename... Args>
-inline void dbg_out(vector<string>::iterator it, T a, Args... args){ cerr << "[" << it->substr((*it)[0] == ' ', it->length()) << " = " << a << "] "; dbg_out(++it, args...); }
+template<class T1, class T2> ostream &operator<<(ostream &os, const pair<T1,T2> &p){ os << '{' << p.first << ", " << p.second << '}'; return os;}
+template<typename C,typename T = decay_t<decltype(*begin(declval<C>()))>,typename enable_if<!is_same<C,string>::value>::type* = nullptr>
+ostream &operator<<(ostream &os, const C &container){bool first = true; stringstream ss; ss << '[';for(const auto &x : container){ if(!first) ss << ", "; first = false; ss << x;} ss << ']';return os << ss.str();}
+vector<string> split(const string& s, char c){ vector<string> v; stringstream ss(s); string x; while (getline(ss, x, c)) v.emplace_back(x); return v;}
+inline void dbg_out(vector<string>::iterator it){ cerr << endl; }
+template<typename T, typename... Args> inline void dbg_out(vector<string>::iterator it, T a, Args... args){ cerr << "[" << it->substr((*it)[0] == ' ', it->length()) << " = " << a << "] "; dbg_out(++it, args...); }
 #define debugg(...) {cerr << "[Line " << __LINE__ << "] :: "; dbg_out(split(#__VA_ARGS__, ',').begin(), __VA_ARGS__);}
 
 #define endl             "\n"
@@ -20,15 +18,13 @@ inline void dbg_out(vector<string>::iterator it, T a, Args... args){ cerr << "["
 #define int              long long
 #define dd               long double
 #define pb               push_back
-#define mp               make_pair
 #define ALL(x)           x.begin(), x.end()
 #define FOR(i, s, e)     for(int i = s; i <= e; i++)
 #define FORR(i, s, e)    for(int i = s; i >= e; i--)
+typedef pair<int, int>   pii;
+typedef pair<int, pii>   piii;
 
-typedef pair<int, int> pii;
-typedef pair<int, pair<int, int>> piii;
-template<typename T> 
-using pbds = tree<T, null_type, less<T>, 
+template<typename T> using pbds = tree<T, null_type, less<T>, 
 rb_tree_tag ,tree_order_statistics_node_update>; 
 
 const int mod = 1e9 + 7;
@@ -38,6 +34,7 @@ const int N   = 5e5 + 5;
 
 void test_cases(){
     
+
 }
 
 
