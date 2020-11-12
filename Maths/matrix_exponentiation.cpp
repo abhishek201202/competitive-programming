@@ -1,14 +1,40 @@
 // https://www.spoj.com/problems/SEQ/
 #include<bits/stdc++.h>
 #define int long long
+#define dd long double
 #define ff first
 #define ss second
 #define pb push_back
 using namespace std;
 
-#define mod 1000000000
+const int mod = 1e9 + 7;
+
 int k;
 vector<int> a , b , c;
+
+
+struct M{
+	dd n, m;
+	vector<vector<dd>> t;
+	M(int n, int m){
+		this -> n = n;
+		this -> m = m;
+		t.resize(n, vector<dd>(m));
+	}
+
+	M operator* (const M& b) const{
+		M c = M(n, b.m);
+		for(int i = 0; i < n; i++){
+			for(int j = 0; j < b.m; j++){
+				for(int k = 0; k < b.n; k++){
+					c.t[i][k] = (c.t[i][k] + (t[i][j] * b.t[j][k]));
+				}
+			}
+		}
+		return c;
+	}
+};
+
 
 
 vector<vector<int>> multiply(vector<vector<int>> A , vector<vector<int>> B){
