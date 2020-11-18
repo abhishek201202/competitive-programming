@@ -12,14 +12,13 @@ const int mod = 1e9 + 7;
 int k;
 vector<int> a , b , c;
 
-
 struct M{
 	dd n, m;
 	vector<vector<dd>> t;
 	M(int n, int m){
 		this -> n = n;
 		this -> m = m;
-		t.resize(n, vector<dd>(m));
+		t.resize(n, vector<dd>(m, 1.0));
 	}
 
 	M operator* (const M& b) const{
@@ -34,6 +33,19 @@ struct M{
 		return c;
 	}
 };
+
+template<typename T>
+T pow(T a, int b){
+	M res = M(a.n, a.m);
+	while(b){
+		if(b&1){
+			res = res * a;
+		}
+		b >>= 1ll;
+		a = a * a;
+	}
+	return res;
+}
 
 
 
