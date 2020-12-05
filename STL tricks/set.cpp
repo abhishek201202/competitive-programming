@@ -17,4 +17,10 @@ int32_t main(){
         cout << x << " ";
     }
     cout << endl;
+
+
+    // ~~~~~~~ advance ~~~~~~~~~
+    auto it = st.begin();
+    advance(it, 3); // shift the pointer by 3 unit
+    cout << *it << endl;
 }
