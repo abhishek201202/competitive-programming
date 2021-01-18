@@ -8,17 +8,18 @@ using namespace std;
 
 template<typename T>
 vector<int> lps(T s){
-	int len = s.size();
-	vector<int> LPS(len , 0);
-	int i = 1 , j = 0;
-	while(i < len){
-		if(s[i] == s[j]){
-			LPS[i++] = (j++) + 1;
-		}else{
-			j != 0 ? j = LPS[j - 1] : LPS[i++] = 0;
-		}
-	}
-	return LPS;
+    int len = s.size();
+    vector<int> LPS(len , 0);
+    int i = 1 , j = 0;
+    for(int i = 1; i < len; i++){
+        int k = LPS[i - 1];
+        while(k && s[k] != s[i]){
+            k = LPS[k - 1];
+        }
+        if(s[k] == s[i]) k++;
+        LPS[i] = k;
+    }
+    return LPS;
 }
 
 template<typename T>

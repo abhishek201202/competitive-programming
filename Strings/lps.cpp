@@ -11,17 +11,18 @@ using namespace std;
 // ending at that index
 template<typename T>
 vector<int> lps(T s){
-	int len = s.size();
-	vector<int> LPS(len , 0);
-	int l = 0, r = 1;
-	while(r < len){
-		if(s[r] == s[l]){
-			LPS[r++] = (l++) + 1;
-		}else{
-			(l != 0) ? l = LPS[l - 1] : LPS[r++] = 0;
-		}
-	}
-	return LPS;
+    int len = s.size();
+    vector<int> LPS(len , 0);
+    int i = 1 , j = 0;
+    for(int i = 1; i < len; i++){
+        int k = LPS[i - 1];
+        while(k && s[k] != s[i]){
+            k = LPS[k - 1];
+        }
+        if(s[k] == s[i]) k++;
+        LPS[i] = k;
+    }
+    return LPS;
 }
 
 int32_t main(){
