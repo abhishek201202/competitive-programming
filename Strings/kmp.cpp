@@ -23,25 +23,30 @@ vector<int> lps(T s){
 }
 
 template<typename T>
-int KMP(T s , T p){
-	int slen = s.size();
-	int plen = p.size();
-	int si = 0 , pi = 0;
+vector<int> kmp(T t , T p){
 	vector<int> LPS = lps(p);
-	while(pi < plen && si < slen){
-		if(s[si] == p[pi]){
-			si ++ , pi ++ ;
-		}else{
-			(pi != 0)? pi = LPS[pi - 1] : si++; 
+	vector<int> KMP(t.size(), 0);
+	for(int i = 0, j = 0; i < t.size(); i++){
+		while(j && t[i] != p[j]){
+			j = LPS[j - 1];
+		}
+		if(t[i] == p[j]) j++;
+		if(j == p.size()){
+			KMP[i - p.size() + 1] = 1;
 		}
 	}
-	return pi == plen ? 1 : 0;
+	return KMP;
 }
 
 int32_t main(){
-	string s , p;
-	cin >> s >> p;
-	cout << KMP(s , p) << endl;
+	string p , t;
+	cin >> p >> t;
+	vector<int> KMP = kmp(t, p);
+	int res = 0;
+	for(int i = 0; i < KMP.size(); i++){
+		res += KMP[i];
+	}
+	cout << res << endl;
 }
 /*
 ABABDABACDABABCABAB

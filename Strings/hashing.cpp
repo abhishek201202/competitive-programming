@@ -20,7 +20,7 @@ public:
         h.resize(n + 1);
     }
 
-    void pre(){
+    void build(){
         powP[0] = 1ll;
         int p_pow = p;
         for(int i = 1; i <= n; i ++){

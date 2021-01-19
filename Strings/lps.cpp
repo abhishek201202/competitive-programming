@@ -5,7 +5,7 @@
 #define pb push_back
 using namespace std;
 
-
+// LPS array is always generated for pattern which we have to find
 // will give the vector whose ith index tells 
 // the length of prefix which is also a suffix 
 // ending at that index

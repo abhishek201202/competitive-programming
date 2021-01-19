@@ -21,7 +21,7 @@ vector<int> Z(T s){
 			while(r < len && s[r - l] == s[r]) r++ ;
 			z[i] = (r--) - l;
 		}else{
-			if(z[i - l] <= r - i){
+			if(i + z[i - l] <= r){
 				// i lies b/w l and r 
 				// z will exist previously
 				z[i] = z[i - l];
