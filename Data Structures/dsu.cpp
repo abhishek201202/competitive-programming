@@ -8,33 +8,47 @@ typedef pair<int,int> pii;
 
 template<typename T>
 struct DSU{
-	int sz;
+	int Size;
 	map<T,T> parent;
-	DSU(){}
-	DSU(int n){
-		this -> sz = n;
-		for(int i = 0; i < n; i++){
-			parent[i] = i;
-		}
+	map<T, int> Rank;
+	DSU() : Size(0){}
+
+	int size(){ return Size; }
+	
+	void init(int u){
+		if(parent.count(u)) return;
+		parent[u] = u;
+		Rank[u] = 0; 
+		Size++;
 	}
+	
 	T find(T u){
-		if(!parent.count(u)) return parent[u] = u;
 		if(u == parent[u]) return u;
 		return parent[u] = find(parent[u]) ;
 	}
+	
 	void merge(T u , T v){
-		if(!parent.count(u)) parent[u] = u;
-		if(!parent.count(v)) parent[v] = v;
-		T p_u = find(u);
-		T p_v = find(v);
-		if(p_v != p_u){
-			parent[p_u] = p_v;
-			sz--;
+		init(u); init(v);
+		u = find(u);
+		v = find(v);
+		if(u != v){
+			if(Rank[u] < Rank[v]){
+				swap(u, v);
+			}
+			parent[u] = v;
+			if(Rank[u] == Rank[v]) Rank[u]++;
+			Size--;
 		}
 	}
-	int size(){ 
-		return sz;
-	}
+	
+	map<T, vector<T>> get_comp(){
+        map<T, vector<T>> comp;
+        for(auto &[f, s] : parent){
+            parent[f] = find(f);
+            comp[parent[f]].push_back(f);
+        }
+        return comp;
+    }
 };
 
 

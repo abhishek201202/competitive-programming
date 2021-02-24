@@ -5,8 +5,8 @@
 #define pb push_back
 using namespace std;
 
-// return the vector with info that ith index is the centre 
-// of palindrome having length equal to value at that index
+// pal[i] ==> palindrome with centre at i, 
+// and having length P[i]
 // abbcbba == @#a#b#b#c#b#b#a#$ == size == 2*n + 3 == 
 // to cover both odd and even cases of palindrome
 template<typename T>
@@ -15,10 +15,10 @@ vector<int> manacher(T& s){
     int n = s.size();
     vector<int> pal(2 * n + 3 , 0);
 
-    int c = 1 , r_most = 1;
+    int c = 2, r_most = 2;
     for(int i = 2 ; i < 2 * n + 1 ; i++){
-        int ref = c - (i - c); 
-        pal[i] = max(0 , min(r_most - i , pal[ref]));
+        int img = c - (i - c); 
+        pal[i] = max(0 , min(r_most - i, pal[img]));
         int l = i - pal[i] - 1;
         int r = i + pal[i] + 1;
         while(l%2 != 0 || ( (l/2 - 1) >= 0 && (r/2 - 1) >= 0 
