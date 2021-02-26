@@ -14,8 +14,8 @@ namespace PathCopySegmentTree{
 	int n, sz = 0, V = 1; 
 	int Left[N], Right[N], Root[N];
 
-	// return the idx of root
 	// Don't Forget to update the value of Root array
+	// return the idx of root
 	int update(int idx, int val, int node, int si, int ei){
 		if(idx < si || idx > ei) return node;
 		if(si == ei){
