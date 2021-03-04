@@ -8,7 +8,27 @@ using namespace std;
 const int N = 1e5;
 int n, arr[N];
 
+// Time complexity ==> O(n)
+// Valid for array of permuation of 1-n
+int inversion(vector<int>& a){
+    int n = a.size();
+    vector<int> vis(n, 0);
+    int res = 0;
+    for(int i = 0; i < n; i++){
+        if(vis[i]) continue;
+        int j = a[i];
+        while(j != i){
+            vis[j] = 1;
+            j = a[j];
+        }
+        vis[j] = 1;
+        res++;
+    }
+    return res;
+}
 
+
+// Time Complexity ==> O(nlogn)
 int Merge(int left, int mid, int right){ 
     int i = left , j = mid, k = 0; 
     int inv_cnt = 0; 
@@ -43,6 +63,7 @@ int InversionMergeSort(int left, int right){
     return inv_cnt; 
 } 
 
+// Time Complexity  ==> O(n^2)
 int inverson_count(){
     multiset<int> ms;
     ms.insert(arr[0]);
