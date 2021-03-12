@@ -11,6 +11,10 @@ const int N = 1e5 + 5;
 int n , depth[N] , col[N];
 vector<int> adj[N];
 
+int g(int n, auto& f){
+	return f(n);
+}
+
 int32_t main(){
 	cin >> n;
 	for(int i = 0 ;i < n - 1; i++){
@@ -37,4 +41,12 @@ int32_t main(){
 			dfs(v, u);
 		}
 	};
+
+
+	//passing lambda function as an argument
+	int n = 1323;
+	auto f = [&](int n){
+    	return n * 10;
+    };
+    cout << g(n, f) << endl;
 }
