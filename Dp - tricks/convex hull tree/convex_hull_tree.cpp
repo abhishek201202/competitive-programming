@@ -1,4 +1,5 @@
-// https://codeforces.com/contest/1083/problem/E
+// [maximizing Problem] https://codeforces.com/contest/1083/problem/E
+// [minimizing Problem] https://atcoder.jp/contests/dp/tasks/dp_z
 #include <bits/stdc++.h>
 using namespace std;
 #define ff first
@@ -16,6 +17,7 @@ struct line{
 struct CHT{
     deque<line> dq;
     // maintaining a upper convex hull for maximizing problem 
+    // For minimising problem just change the inequality
     void add(line l){
         while(dq.size() >= 2 && l.intersectX(dq[0]) >= dq[0].intersectX(dq[1])){
             dq.pop_front();
@@ -23,7 +25,7 @@ struct CHT{
         dq.push_front(l);
     }
     int query(int x){
-        while(dq.size() >= 2 && dq.back().intersectX(dq[dq.size() - 2]) >= x /*dq.back().eval(x) <= dq[dq.size() - 2].eval(x)*/){
+        while(dq.size() >= 2 && dq.back().intersectX(dq[dq.size() - 2]) >= x){
             dq.pop_back();
         }
         return dq.back().eval(x);
