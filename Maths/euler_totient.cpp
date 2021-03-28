@@ -5,23 +5,24 @@
 #define pb push_back
 using namespace std;
 
-vector<int> Euler(int n){
-	vector<int> E(n + 1);
-	for(int i = 0 ;i <= n ;i++) E[i] = i;
-	for(int i = 2; i <= n ;i++){
-		if(E[i] != i) continue;
-		E[i] = i - 1;
-		for(int j = 2 * i ; j <= n ; j += i){
-			E[j] = E[j] * (i - 1) / i;
+const int N = 1e6 + 5;
+int phii[N];
+
+// Euler Totient Function
+void pre(){
+	iota(phii, phii + N, 0);
+	for(int i = 2; i < N; i++){
+		if(phii[i] != i) continue;
+		for(int j = i; j < N; j += i){
+			phii[j] = phii[j] * (i - 1) / i;
 		}
 	}
-	return E;
 }
 
 int32_t main(){
+	pre();
 	int n; cin >> n;
-	vector<int> E = Euler(n);
 	for(int i = 0 ;i <= n ;i++){
-		cout << "i : " << i << " :: " << E[i] << endl;
+		cout << "i : " << i << " :: " << phii[i] << endl;
 	}
 }
