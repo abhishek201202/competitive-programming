@@ -4,7 +4,7 @@ using namespace std;
 struct Mint{
     int64_t x;
     static const int64_t mod = 1e9 + 7;
-    Mint(int64_t x = 0) : x((x%mod + mod)%mod){}
+    Mint(int64_t x = 0) : x(x - mod * (x / mod)){}
     // a % b = (a — b * (a / b))
     // % operator is costly 
     Mint& operator+=(const Mint a){ 
