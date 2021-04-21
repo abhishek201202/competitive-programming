@@ -76,7 +76,7 @@ int32_t main(){
 	ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL);
 	int n, m ; cin >> n >> m;
 	LCA lca(n);
-	for(int i =0 ; i  < n -1 ; i++){
+	for(int i = 0; i  < n - 1; i++){
 		int s ,d ; cin >> s >> d;
 		lca.add_edge(s - 1, d - 1);
 	}
