@@ -34,7 +34,11 @@ vector<int> topological(){
 	return ans;
 }
 
+
+
+
 // By Using BFS
+// usefull when we to do the traversal as well 
 vector<int> khans_algo(){
 	queue<int> q;
 	for(int i = 0; i < n; i++){
@@ -52,7 +56,7 @@ vector<int> khans_algo(){
 		}
 		cnt++;
 	}
-	if(cnt == 0) res.clear(); // there exits a cycle
+	if(cnt != n) res.clear(); // there exits a cycle
 	return res;
 }
 
