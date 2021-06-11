@@ -36,7 +36,7 @@ int pow(int a, int b, const int mod) {
 
 
 bool isPrime(int n) { // returns true if n is probably prime, else returns false.
-    if(n < 2 || n % 6 % 4 != 1) return n-2 < 2;
+    if(n < 2 || n % 6 % 4 != 1) return n-2 < 2 && n != 1;
     int A[] = {2, 325, 9375, 28178, 450775, 9780504, 1795265022};
     int s = __builtin_ctzll(n-1);
     int d = n >> s;
