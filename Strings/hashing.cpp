@@ -13,6 +13,8 @@ public:
     string s;
     vector<int> powP, h;
     const int p = 163; // any prime number
+    const int mod = 99999998743; // if needed to take mod
+    // in case of collision try to inc mod and try to dec p
     Hashing(string s){
         this -> s = s;
         this -> n = s.size();
