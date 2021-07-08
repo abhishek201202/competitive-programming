@@ -32,7 +32,7 @@ void dijkstra(int s){
 		pq.pop();
 		int u = curr.ff;
 		int w = curr.ss;
-		if(w > dis[u]) continue;
+		if(w > dis[u]) continue; // very important => TLE if we not put this cond
 		for(int i = 0 ; i < adj[u].size() ; i++){
 			int v = adj[u][i];
 			if(dis[v] > dis[u] + weight[u][i] && weight[u][i] != 0){
