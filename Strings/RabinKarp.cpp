@@ -4,8 +4,8 @@
 vector<int> RabinKarp(string s, string t){
     if(s.size() < t.size()) return {};
     int n = s.size(), m = t.size();
-    const int p = 163;
-    const int mod = 99999998743;
+    const int p = 163; // 100001
+    const int mod = 99999998743; // 99999998743
 
     int hashS = 0, hashT = 0, powP = 1;
     for(int i = m - 1; i >= 0; i--){

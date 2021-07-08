@@ -31,6 +31,8 @@ void dijkstra(int s){
 		pii curr = pq.top();
 		pq.pop();
 		int u = curr.ff;
+		int w = curr.ss;
+		if(w > dis[u]) continue;
 		for(int i = 0 ; i < adj[u].size() ; i++){
 			int v = adj[u][i];
 			if(dis[v] > dis[u] + weight[u][i] && weight[u][i] != 0){
