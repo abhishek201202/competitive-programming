@@ -23,8 +23,10 @@ void dfs(int u , int p = -1){
 	parent[u] = p;
 	for(int i = 0 ;i < adj[u].size() ;i++){
 		int v = adj[u][i];
-		if(col[v] == 1){
-			cycle.pb({v , u}); // start and end vertex of cycle 
+		if(col[v]){
+			if(col[v] == 1){
+				cycle.pb({v , u}); // start and end vertex of cycle 
+			}
 			continue;
 		}
 		dfs(v , u);
