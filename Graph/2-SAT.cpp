@@ -1,4 +1,5 @@
 // https://cses.fi/problemset/task/1684
+// https://codeforces.com/contest/1615/problem/D
 #include<bits/stdc++.h>
 using namespace std;
 
@@ -27,7 +28,8 @@ struct TwoSat{
     }
     // For the following three functions
     // int x, bool val: if 'val' is true, we take the variable to be x. Otherwise we take it to be x's complement.
-
+    // p xor q = true => addXOR(p, 1, q, 1)
+    // p xor q = false => addAND(p, 1, q, 1) 
 
     // At least one of them is true
     void add_clause_or(int u, bool val1, int v, bool val2){
