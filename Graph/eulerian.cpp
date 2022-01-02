@@ -14,98 +14,102 @@ using namespace std;
 //                     all other vertices have equal in and out degree
 // ((sv = out - in == 1) && (ev == in - out == 1)) when exactly 2 vertex are odd
 // Eulerian Circuit :: every vertex has equal in and out degree
-vector<int> EulerianForDirected(vector<array<int, 2>> &edges, int n){
-    vector<vector<int>> adj(n, vector<int>());
-    vector<int> in(n, 0), out(n, 0);
-    for(auto &[u, v] : edges){
-        adj[u].push_back(v);
-        in[v]++, out[u]++;
-    }
-
-    // this condition is only for euler path if circuit needed then comment this for loop
-    int sv = -1, ev = -1;
-    for(int i = 0; i < n; i++){
-        if(out[i] - in[i] == 1){
-            if(sv == -1) sv = i;
-            else return {};
-        }
-        if(in[i] - out[i] == 1){
-            if(ev == -1) ev = i;
-            else return {};
-        }
-    }
-    for(int i = 0; i < n; i++){
-        if(i == sv || i == ev) continue;
-        if(in[i] != out[i]) return {};
-    }
-
-    if(sv == -1) sv = 0;
-    vector<int> path;
-    stack<int> st; st.push(sv);
-    while(st.size()){
-        int u = st.top();
-        if(adj[u].empty()){
-            path.push_back(u);
-            st.pop();
-        }else{
-            int v = adj[u].back(); adj[u].pop_back();
-            st.push(v);
-        }
-    }
-    if(path.size() != edges.size() + 1) return {};
-    reverse(path.begin() , path.end());
-    return path;
-}
-
-
-
-
 // For Undirected Graph
 // Eulerian Path    :: either every vertex has even degree 
 //                     or exactly 2 vertices have odd degree 
 // Eulerian Circuit :: every vertex has an even degree
-vector<int> EulerianForUnDirected(vector<array<int, 2>> &edges, int n){
-    vector<vector<array<int, 2>>> adj(n, vector<array<int, 2>>());
-    for(int i = 0; i < edges.size(); i++){
-        int u = edges[i][0], v = edges[i][1];
-        adj[u].push_back({v, i});
-        adj[v].push_back({u, i});
-    }
-    vector<int> deg(n, 0);
-    int cntOdd = 0, V = 0;
-    for(int u = 0; u < n; u++){
-        deg[u] = adj[u].size();
-        if(deg[u]&1) {cntOdd++, V = u;}
-    }
-    if(cntOdd != 0) return {}; // for circuit
-    // if(cntOdd != 0 && cntOdd != 2) return {}; // for path
-    
-    vector<int> path, vis(edges.size(), 0);
-    function<void(int)> dfs = [&](int u){
-        while(adj[u].size()){
-            auto &[v, i] = adj[u].back(); adj[u].pop_back();
-            if(vis[i]) continue;
-            vis[i] = 1;
-            dfs(v);
-            path.push_back(u);
-        }
-    };
-    path.push_back(V);
-    dfs(V);
-    if(path.size() != edges.size() + 1) return {};
-    return path;
-}
 
+
+template<bool isDirected>struct Euler{
+    int n, m, sv, ev;
+    vector<array<int, 2>> Edges;
+    vector<vector<int>> adj;
+    vector<int> U, V, in, out, Path;
+
+    Euler(vector<array<int, 2>> _Edges, int _n){
+        n = _n, m = _Edges.size(), sv = ev = -1;
+        Edges = _Edges;
+        adj.resize(n, vector<int>());
+        U.resize(m), V.resize(m);
+        in.resize(n, 0);
+        out.resize(n, 0);
+    }
+
+    void add_edge(int u, int v, int e){
+        in[v]++, out[u]++;
+        U[e] = u, V[e] = v;
+        adj[u].push_back(e);
+        if(!isDirected) adj[v].push_back(e);
+    }
+    bool okkDirected(){
+        // this condition is only for euler path if circuit needed then comment this for loop
+        for(int i = 0; i < n; i++){
+            if(out[i] - in[i] == 1){ // for starting vertex
+                if(sv == -1) sv = i;
+                else return false;
+            }else if(in[i] - out[i] == 1){ // for ending vertex
+                if(ev == -1) ev = i;
+                else return false;
+            }
+        }
+        // for both path and circuit
+        for(int i = 0; i < n; i++){
+            if(i != sv && i != ev && in[i] != out[i]) return false;
+        }
+        if(sv == -1) sv = ev = 0;
+        return true;
+    }
+    bool okkUnDirected(){
+        int cntOdd = 0;
+        for(int i = 0; i < n; i++){
+            if((in[i] + out[i])&1) {cntOdd++, sv = i;}
+        }
+        if(cntOdd != 0) return false; // for circuit
+        // if(cntOdd != 0 && cntOdd != 2) return false; // for path
+        if(sv == -1) sv = 0;
+        return true;
+    }
+
+    void build(){
+        for(int i = 0; i < m; i++){
+            add_edge(Edges[i][0], Edges[i][1], i);
+        }
+        if(isDirected) {if(!okkDirected()) return;}
+        else {if(!okkUnDirected()) return;}
+        vector<int> vis(m, 0);
+        function<void(int)> dfs = [&](int u){
+            while(adj[u].size()){
+                int e = adj[u].back(); adj[u].pop_back();
+                if(vis[e]) continue;
+                vis[e] = 1;
+                dfs(U[e] ^ V[e] ^ u);
+                Path.push_back(u);
+            }
+        };
+        if(!isDirected) Path.push_back(sv);
+        dfs(sv);
+        if(isDirected) {
+            reverse(Path.begin(), Path.end());
+            Path.push_back(ev);
+        };
+        if(Path.size() != m + 1) Path = vector<int>();
+    }
+};
 
 
 int32_t main(){
     int n, m; cin >> n >> m;
     vector<array<int, 2>> edges(m);
     for(int i = 0; i < m; i++){
-    	cin >> edges[i][0] >> edges[i][1], edges[i][0]--, edges[i][1]--;
+        cin >> edges[i][0] >> edges[i][1], edges[i][0]--, edges[i][1]--;
     }
-
-    vector<int> P = EulerianForDirected(edges, n);
+    Euler<false> solver(edges, n);
+    solver.build();
+    vector<int> P = solver.Path;
+    if(!P.size()){
+        cout << "IMPOSSIBLE" << endl;
+        return 0;
+    }
     for(int i = 0; i < P.size() ; i++){
         cout << P[i] + 1 << " ";
     }
