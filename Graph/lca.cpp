@@ -13,15 +13,14 @@ struct LCA{
 	vector<vector<int>> adj, parent;
 	vector<int> depth;
 
-	LCA(int _n = 0){
-		init(_n);
-	}
+	LCA(int _n = 0){ init(_n); }
 	LCA(vector<vector<int>>& _adj){
 		init(_adj.size());
 		adj = _adj;
 	} 
 
 	void init(int sz){
+		this -> n = sz;
 		adj = vector<vector<int>>(sz, vector<int>());
 		parent = vector<vector<int>>(sz, vector<int>(H, 0));
 		depth = vector<int>(sz, 0);
