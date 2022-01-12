@@ -4,7 +4,52 @@
 #define ss second
 #define pb push_back
 using namespace std;
-typedef pair<int,int> pii;
+
+
+
+struct DSU{
+    int n, Size;
+    vector<int> Parent, Rank;
+    
+    DSU(int _n){
+        n = _n, Size = _n;
+        Parent = vector<int>(n);
+        Rank = vector<int>(n, 0);
+        iota(Parent.begin(), Parent.end(), 0);
+    }
+
+    int size(){ return Size; }
+    
+    int find(int u){
+        if(u == Parent[u]) return u;
+        return Parent[u] = find(Parent[u]) ;
+    }
+    
+    void merge(int u , int v){
+        u = find(u);
+        v = find(v);
+        if(u != v){
+            if(Rank[u] < Rank[v]){
+                swap(u, v);
+            }
+            Parent[u] = v;
+            if(Rank[u] == Rank[v]) Rank[u]++;
+            Size--;
+        }
+    }
+    
+    unordered_map<int, vector<int>> get_comp(){
+        unordered_map<int, vector<int>> comp;
+        for(int i = 0; i < n; i++){
+            Parent[i] = find(i);
+            comp[Parent[i]].push_back(i);
+        }
+        return comp;
+    }
+};
+
+
+
 
 template<typename T>
 struct DSU{
