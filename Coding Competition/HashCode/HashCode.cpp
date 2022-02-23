@@ -83,11 +83,14 @@ int findScore(){
 
 }
 
+void solve(){
+    
+}
+
 
 void test_cases(){
     takeInput();
-
-
+    solve();
     outputInFile(findScore());
 }
 
