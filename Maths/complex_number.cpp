@@ -34,6 +34,7 @@ point intersect(point a,point b,point p,point q){
 point to_comp(pii a){
 	return point(a.ff , a.ss);
 }
+
 int32_t main(){					
 	point p1(3,4);
 	cout << p1 << endl;
