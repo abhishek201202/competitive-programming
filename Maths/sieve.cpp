@@ -30,8 +30,7 @@ vector<int> Prime, spf(N);
 void sieve(){
     iota(spf.begin(), spf.end(), 0);
     for(int i = 2 ; i < N ; i++){
-        if(spf[i] != i) continue;
-        Prime.push_back(i);
+        if(spf[i] == i) Prime.push_back(i);
         for(int j = 0; j < Prime.size() && i * Prime[j] < N && Prime[j] <= spf[i]; j++){
             spf[i * Prime[j]] = Prime[j];
         }
