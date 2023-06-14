@@ -30,6 +30,7 @@ void pre(){
 }
 
 int ncr(int n , int r){
+	if(r > n) return 0;
 	int ans = fact[n];
 	ans = (ans * inv[n - r]) % mod;
 	ans = (ans * inv[r]) % mod;
