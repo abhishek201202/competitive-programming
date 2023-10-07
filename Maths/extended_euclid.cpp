@@ -25,7 +25,9 @@ int32_t main(){
 		cout << endl << endl << "new test case ........." << endl;
 		int a , b; cin >> a >> b;
 		int x , y;
-		cout << "gcd : " << Extended_euclid(a , b , x , y) << " ";
+		cout << "gcd : " << Extended_euclid(abs(a) , abs(b) , x , y) << " ";
+		if(a < 0) x = -x;
+		if(b < 0) y = -y;
 		cout << "x : " << x << " y : " << y << endl;
 	}	
 }
