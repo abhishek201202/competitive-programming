@@ -1,0 +1,33 @@
+{
+	"": {
+		"prefix": "PrimeFactors",
+		"body": [
+		  "// time complexity === >>> O(Nloglog(N))",
+		  "// but limited with the size of lowP array",
+		  "const int N = 1e5 + 5;",
+		  "int lowP[N];",
+		  "// lowP[i] it is the lowest prime factor of i ",
+		  "void sieve(){",
+		  "	memset(lowP , 0 ,sizeof lowP);",
+		  "	for(int i = 2; i < N ; i++){",
+		  "		if(lowP[i]) continue;",
+		  "		lowP[i] = i;",
+		  "		for(int j = i * i ; j < N ; j += i){",
+		  "			if(!lowP[j]) lowP[j] = i;",
+		  "		}",
+		  "	}",
+		  "}",
+		  "vector<int> Prime_factors_using_sieve(int n){",
+		  "	vector<int> res;",
+		  "	while(n > 1){",
+		  "		int curr = lowP[n];",
+		  "		res.pb(curr);",
+		  "		while(n%curr == 0) n /= curr; ",
+		  "	}",
+		  "	sort(res.begin() , res.end());",
+		  "	return res;",
+		  "}"
+		],
+		"description": ""
+	  }
+}

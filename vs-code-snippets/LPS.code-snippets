@@ -1,0 +1,27 @@
+{
+	"": {
+		"prefix": "LPS",
+		"body": [
+		  "// LPS array is always generated for pattern which we have to find",
+		  "// will give the vector whose ith index tells ",
+		  "// the length of prefix which is also a suffix ",
+		  "// ending at that index",
+		  "template<typename T>",
+		  "vector<int> lps(T s){",
+		  "    int len = s.size();",
+		  "    vector<int> LPS(len , 0);",
+		  "    int i = 1 , j = 0;",
+		  "    for(int i = 1; i < len; i++){",
+		  "        int k = LPS[i - 1];",
+		  "        while(k && s[k] != s[i]){",
+		  "            k = LPS[k - 1];",
+		  "        }",
+		  "        if(s[k] == s[i]) k++;",
+		  "        LPS[i] = k;",
+		  "    }",
+		  "    return LPS;",
+		  "}"
+		],
+		"description": ""
+	  }
+}

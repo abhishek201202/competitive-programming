@@ -1,0 +1,26 @@
+{
+	"": {
+		"prefix": "grundyNumber",
+		"body": [
+		  "int32_t GrundyNo(int n){",
+		  "    if(n <= 2) return n;",
+		  "    int a = GrundyNo((floor)(n/2));",
+		  "    int b = GrundyNo((floor)(n/3));",
+		  "    int c = GrundyNo((floor)(n/6));",
+		  "    int minni = min(a,min(b,c));",
+		  "    int maxxi = max(a,max(b,c));",
+		  "    int mid = a + b + c - minni - maxxi;",
+		  "    if(minni != 0){",
+		  "        return 0;",
+		  "    }else if(mid != minni + 1){",
+		  "        return minni+1;",
+		  "    }else if(maxxi != mid + 1){",
+		  "        return mid + 1;",
+		  "    }else{",
+		  "        return maxxi + 1;",
+		  "    }",
+		  "}"
+		],
+		"description": ""
+	  }
+}

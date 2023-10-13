@@ -1,0 +1,22 @@
+{
+	"": {
+		"prefix": "EulerTour",
+		"body": [
+		  "const int N   = 5e5 + 5;",
+		  "int n, idx;",
+		  "vector<int> adj[N];",
+		  "int order[N], vis[N];",
+		  "",
+		  "void Euler_tour(int u){",
+		  "	vis[u] = 1;",
+		  "	order[idx++] = u;",
+		  "	for(auto v : adj[u]){",
+		  "		if(vis[v]) continue;",
+		  "		Euler_tour(v);",
+		  "		order[idx++] = u;",
+		  "	}",
+		  "}"
+		],
+		"description": ""
+	  }
+}

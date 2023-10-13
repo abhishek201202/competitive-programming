@@ -1,0 +1,21 @@
+{
+	"": {
+		"prefix": "EulerTotient",
+		"body": [
+		  "const int N = 1e6 + 5;",
+		  "int phii[N];",
+		  "",
+		  "// Euler Totient Function",
+		  "void pre(){",
+		  "	iota(phii, phii + N, 0);",
+		  "	for(int i = 2; i < N; i++){",
+		  "		if(phii[i] != i) continue;",
+		  "		for(int j = i; j < N; j += i){",
+		  "			phii[j] = phii[j] * (i - 1) / i;",
+		  "		}",
+		  "	}",
+		  "}"
+		],
+		"description": ""
+	  }
+}

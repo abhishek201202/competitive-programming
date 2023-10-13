@@ -1,0 +1,22 @@
+{
+	"": {
+		"prefix": "n_to_base_k",
+		"body": [
+		  "string n_to_base_k(int n,int r){",
+		  "    string s = \"\";",
+		  "    while(n != 0){",
+		  "        int rem = n % r;",
+		  "        if(rem <= 9){",
+		  "             s = (char)('0' + rem) + s;",
+		  "        }else{",
+		  "            s = (char)('A' + rem - 10) + s;",
+		  "        }",
+		  "        n /= r;",
+		  "    }",
+		  "    while(s.size() != 32) s = '0' + s;",
+		  "    return s;",
+		  "}"
+		],
+		"description": ""
+	  }
+}

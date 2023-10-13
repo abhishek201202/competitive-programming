@@ -1,0 +1,36 @@
+{
+	"": {
+		"prefix": "EulerTourAndSegmentTree",
+		"body": [
+		  "const int N = 1e5 + 5;",
+		  "int n, st[N], et[N];",
+		  "vector<int> adj[N];",
+		  "",
+		  "vector<int> Euler_tour(){",
+		  "	vector<int> vis(n, 0);",
+		  "	vector<int> order;",
+		  "	function<int(int)> dfs = [&](int u){",
+		  "		vis[u] = 1;",
+		  "		order.push_back(u);",
+		  "		for(auto v : adj[u]){",
+		  "			if(vis[v]) continue;",
+		  "			order.push_back(dfs(v));",
+		  "		}",
+		  "		return u;",
+		  "	};",
+		  "	order.push_back(dfs(0));",
+		  "	memset(st, -1, sizeof st);",
+		  "	memset(et, -1, sizeof et);",
+		  "	for(int i = 0; i < order.size(); i++){",
+		  "		if(st[order[i]] == -1){",
+		  "			st[order[i]] = i;",
+		  "		}else{",
+		  "			et[order[i]] = i;",
+		  "		}",
+		  "	}",
+		  "	return order;",
+		  "} "
+		],
+		"description": ""
+	  }
+}

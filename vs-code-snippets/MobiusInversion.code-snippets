@@ -1,0 +1,30 @@
+{
+	"": {
+		"prefix": "MobiusInversion",
+		"body": [
+		  "// Tested on :: https://codeforces.com/gym/101982 (B - Coprime Integer)",
+		  "",
+		  "const int N = 2e7 + 5;",
+		  "int lpf[N], Mobius[N];",
+		  "",
+		  "",
+		  "void pre(){",
+		  "	for(int i = 2; i < N; i++){",
+		  "		if(lpf[i]) continue;",
+		  "		for(int j = i; j < N; j += i){",
+		  "			if(!lpf[j]) lpf[j] = i;",
+		  "		}",
+		  "	}",
+		  "	Mobius[1] = 1;",
+		  "	for(int i = 2; i < N; i++){",
+		  "		if(lpf[i / lpf[i]] == lpf[i]){",
+		  "			Mobius[i] = 0;",
+		  "		}else{",
+		  "			Mobius[i] = -1 * Mobius[i / lpf[i]];",
+		  "		}",
+		  "	}",
+		  "}"
+		],
+		"description": ""
+	  }
+}

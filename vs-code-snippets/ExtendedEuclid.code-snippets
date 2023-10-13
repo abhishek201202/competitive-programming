@@ -1,0 +1,21 @@
+{
+	"": {
+		"prefix": "ExtendedEuclid",
+		"body": [
+		  "int Extended_euclid(int a , int b , int &x , int &y){",
+		  "	if(a < b) swap(a , b);",
+		  "	if(b == 0){",
+		  "		x = 1;",
+		  "		y = 0;",
+		  "		return a;",
+		  "	}",
+		  "	int res = Extended_euclid(b , a % b , x , y);",
+		  "	int temp = y;",
+		  "	y = x - ((a / b) * y);",
+		  "	x = temp;",
+		  "	return res;",
+		  "}"
+		],
+		"description": ""
+	  }
+}

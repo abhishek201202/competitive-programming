@@ -1,0 +1,22 @@
+{
+	"": {
+		"prefix": "Sieve",
+		"body": [
+		  "// time complexity O(nlog(logn))",
+		  "vector<int> Prime;",
+		  "void sieve(){",
+		  "	vector<int> P(N , 0);",
+		  "	for(int i = 2 ; i < N ; i++){",
+		  "		if(P[i]) continue;",
+		  "		for(int j = i * i ; j < N ; j += i){",
+		  "			P[j] = 1;",
+		  "		}",
+		  "	}",
+		  "	for(int i = 2 ; i < N ; i++){",
+		  "		if(!P[i]) Prime.pb(i);",
+		  "	}",
+		  "}"
+		],
+		"description": ""
+	  }
+}

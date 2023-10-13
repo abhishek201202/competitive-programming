@@ -1,0 +1,27 @@
+{
+	"": {
+		"prefix": "FenwickTree",
+		"body": [
+		  "const int N = 1e5 + 5;",
+		  "int n;",
+		  "int arr[N] , bit[N];",
+		  "",
+		  "// range sum query.....[1 based indexing on fenwick tree]",
+		  "",
+		  "int query(int index) {",
+		  "	int sum = 0;",
+		  "	for( ; index > 0 ; index -= index & (-index)) {",
+		  "		sum += bit[index];",
+		  "	}",
+		  "	return sum;",
+		  "}",
+		  "",
+		  "void update(int index , int val) {	",
+		  "	for( ; index <= n ; index += index&(-index)) {",
+		  "		bit[index] += val;",
+		  "	}",
+		  "}"
+		],
+		"description": ""
+	  }
+}
