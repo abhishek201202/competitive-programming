@@ -49,6 +49,6 @@ int32_t main(){
 	cout << res << endl;
 }
 /*
-ABABDABACDABABCABAB
 ABABCABAB
+ABABDABACDABABCABAB
 */
