@@ -13,8 +13,8 @@ vector<pair<int, int>> B;
 
 void tarjans(){
 	timer = 0;
-	memset(tin, 0, sizeof timer);
-	memset(low, 0, sizeof low);
+	memset(tin, 0, sizeof timer); // starting time of each node
+	memset(low, 0, sizeof low); // minimum borrower time of all adjacent nodes, except parent
 	memset(vis, 0, sizeof vis);
 	memset(AP, 0, sizeof AP);
 	function<void(int, int)> dfs = [&](int u, int p){
