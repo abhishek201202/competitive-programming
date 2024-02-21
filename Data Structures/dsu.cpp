@@ -32,7 +32,7 @@ struct DSU{
             if(Rank[u] < Rank[v]){
                 swap(u, v);
             }
-            Parent[u] = v;
+            Parent[v] = u;
             if(Rank[u] == Rank[v]) Rank[u]++;
             Size--;
         }
