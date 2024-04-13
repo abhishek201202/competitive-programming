@@ -77,6 +77,4 @@ int inverson_count(){
 }
 
 int32_t main(){
-
-
 }
