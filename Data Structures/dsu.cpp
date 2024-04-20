@@ -29,7 +29,7 @@ struct DSU{
         u = find(u);
         v = find(v);
         if(u != v){
-            if(Rank[u] < Rank[v]){
+            if(Rank[u] < Rank[v]){ // trying to minimize the height of the tree
                 swap(u, v);
             }
             Parent[v] = u;
