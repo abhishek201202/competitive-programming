@@ -24,9 +24,9 @@ struct Geometry {
   double dis(PT p , PT q) {return dot(p - q , p - q);}
 
   // to check point c is in CW or in CCW or collinear with respect to a and b 
-  bool cc(PT a , PT b , PT c) { return (c.x-b.x)*(b.y-a.y)>(c.y-b.y)*(b.x-a.x); }
-  bool ccw(PT a , PT b , PT c) { return (c.x-b.x)*(b.y-a.y)<(c.y-b.y)*(b.x-a.x); }
-  bool isCollinear(PT a , PT b , PT c){ return (c.x-b.x)*(b.y-a.y)<(c.y-b.y)*(b.x-a.x); }
+  bool cc(PT a , PT b , PT c) { return cross(b - a, c - b) < 0; }
+  bool ccw(PT a , PT b , PT c) { return cross(b - a, c - b) > 0; }
+  bool isCollinear(PT a , PT b , PT c){ return cross(b - a, c - b) == 0; }
 
   // given a,b,c are 3 collinear points check if c lies on segment ab or not
   bool onSegment(PT a, PT b, PT c){
