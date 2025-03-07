@@ -6,6 +6,7 @@
 #define pb push_back
 using namespace std;
 
+
 const int mod = 1e9 + 7;
 
 int power(int a,int b,int m){
